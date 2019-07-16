@@ -1,0 +1,31 @@
+<div class="ui-g-12">
+  <p-dataTable [value]="lancamentos" [styleClass]="'tabela'" [paginator]="true" [rows]="2"
+         [responsive]="true">
+    <p-column field="pessoa" header="Pessoa"></p-column>
+    <p-column field="descricao" header="Descrição"></p-column>
+    <p-column header="Vencimento" styleClass="col-data">
+      <ng-template pTemplate="body" let-l="rowData">
+        <span [style.color]="lancamentoVencido(l.dataVencimento) ? 'red' : 'blue'"
+               pTooltip="{{lancamentoVencido(l.dataVencimento) ? 'Vencido' : ''}}" tooltipPosition="top">
+          {{l.dataVencimento | date:"dd/MM/yyyy"}} 
+        </span>
+      </ng-template>
+    </p-column>
+    <p-column header="Pagamento" styleClass="col-data">
+      <ng-template pTemplate="body" let-l="rowData">
+        {{l.dataPagamento | date:"dd/MM/yyyy"}}
+      </ng-template>
+    </p-column>
+    <p-column header="Valor" styleClass="col-valor">
+      <ng-template pTemplate="body" let-l="rowData">
+        <span [style.color]="l.tipo == 'DESPESA' ? 'red' : 'blue'">R$ {{l.valor | number:'1.2-2' }}</span>
+      </ng-template>
+    </p-column>
+    <p-column styleClass="col-acoes">
+      <ng-template pTemplate="body">
+        <button pButton pTooltip="Editar" tooltipPosition="top" icon="fa fa-pencil" aria-label="editar lançamento" class="btn-acao" style="margin-right: 7px"></button>
+        <button pButton pTooltip="Excluir" tooltipPosition="top" icon="fa fa-trash" aria-label="excluir lançamento" class="btn-acao"></button>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+</div>

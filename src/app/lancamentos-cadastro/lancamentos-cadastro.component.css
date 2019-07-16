@@ -1,0 +1,16 @@
+label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.combo-box {
+	width: 100%;
+}
+
+.btn-form {
+	text-align: center;
+	font-weight: bold;
+
+	width: 5em;
+	margin-right: 10px;
+}
