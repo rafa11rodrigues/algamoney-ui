@@ -1,0 +1,104 @@
+<div class="container">
+
+  <form [formGroup]="cadastro" (ngSubmit)="onSubmit()">
+
+    <div class="ui-g">
+  
+      <div class="ui-g-12">
+        <h1>Nova Pessoa</h1>
+      </div>
+  
+      <div class="ui-g-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" formControlName="nome"
+        required minlength="5">
+
+        <app-message [control]="cadastro.get('nome')" error="required" text="Este campo é obrigatório"></app-message>
+        <app-message [control]="cadastro.get('nome')" error="minlength"
+          text="Este campo deve conter no mínimo {{cadastro.get('nome').errors?.minlength?.requiredLength}} caracteres"></app-message>
+      </div>
+  
+      <div class="ui-g-12">
+        <h2>Endereços</h2>
+      </div>
+  
+      <div class="ui-g"
+           formArrayName="enderecos"
+           *ngFor="let e of enderecos.controls; let i = index">
+        <div [formGroupName]="i" class="ui-g">
+          <div class="ui-g-6 ui-md-6">
+            <h3>Endereço {{i+1}}</h3>
+          </div>
+          <div class="ui-g-6 ui-md-6">
+            <button pButton type="button" label="X"
+            (click)="removerEndereco(i)"></button>
+          </div>
+    
+          <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Logradouro</label>
+            <input pInputText type="text" formControlName="logradouro" required>
+  
+            <app-message [control]="e.get('logradouro')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+          <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Número</label>
+            <input pInputText type="number" formControlName="numero"
+                   required min="0">
+  
+            <app-message [control]="e.get('numero')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+    
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Complemento</label>
+            <input pInputText type="text" formControlName="complemento">
+          </div>
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>Bairro</label>
+            <input pInputText type="text" formControlName="bairro" required>
+  
+            <app-message [control]="e.get('bairro')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+          <div class="ui-g-12 ui-md-4 ui-fluid">
+            <label>CEP</label>
+            <p-inputMask mask="99999-999" formControlName="cep" required></p-inputMask>
+  
+            <app-message [control]="e.get('cep')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+    
+          <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Cidade</label>
+            <input pInputText type="text" formControlName="cidade" required>
+  
+            <app-message [control]="e.get('cidade')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+          <div class="ui-g-12 ui-md-6 ui-fluid">
+            <label>Estado</label>
+            <input pInputText type="text" formControlName="estado" required>
+
+            <app-message [control]="e.get('estado')" error="required"
+                         text="Este campo é obrigatório"></app-message>
+          </div>
+        </div> <!-- formGroup -->
+      </div> <!-- for loop -->
+  
+      <div style="margin-bottom: 10px" class="ui-g-12 ui-fluid">
+        <button pButton type="button" label="Adicionar endereço"
+        (click)="adicionarEndereco()"></button>
+      </div>
+  
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar"
+                class="btn-form" [disabled]="cadastro.invalid"></button>
+        <button pButton type="button" [disabled]="true" type="button" label="Novo" class="btn-form ui-button-info"></button>
+        <a href="#">Voltar para a pesquisa</a>
+      </div>
+  
+    </div> <!-- ui-g -->
+  </form>
+
+</div>

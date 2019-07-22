@@ -1,0 +1,17 @@
+<div class="container">
+  <nav class="navbar">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <button class="navbar__toggle" pButton icon="fa fa-bars" aria-label="Exibir ou ocultar menu"
+              (click)="showMenu = !showMenu"></button>
+      </div>
+    </div>
+  
+    <ul class="navbar__menu" [hidden]="!showMenu">
+      <li class="navbar__usuario">Usuário logado</li>
+      <li class="navbar__menu-item"><a href="#">Lançamentos</a></li>
+      <li class="navbar__menu-item"><a href="#">Pessoas</a></li>
+      <li class="navbar__menu-item"><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+</div>

@@ -1,8 +1,26 @@
 <div class="ui-g-12">
-  <p-dataTable [styleClass]="'tabela'" [value]="pessoas" [paginator]="true" [rows]="2" [responsive]="true">
+  <p-dataTable [styleClass]="'tabela'" [value]="pessoas"
+               [paginator]="true" [rows]="linhas"
+               [lazy]="true" [totalRecords]="total"
+               (onLazyLoad)="dispararEvento($event)"
+               [responsive]="true" emptyMessage="Nenhuma pessoa encontrada">
     <p-column field="nome" header="Nome"></p-column>
-    <p-column field="cidade" header="Cidade"></p-column>
-    <p-column field="estado" header="Estado"></p-column>
+    <p-column header="Cidade">
+      <ng-template pTemplate="body" let-p="rowData">
+          <span style="text-align: center; display: block"
+               *ngFor="let e of p.enderecos">
+               {{e.cidade}}
+          </span>
+      </ng-template>
+    </p-column>
+    <p-column header="Estado">
+        <ng-template pTemplate="body" let-p="rowData">
+            <span style="text-align: center; display: block"
+               *ngFor="let e of p.enderecos">
+               {{e.estado}}
+            </span>
+        </ng-template>
+    </p-column>
     <p-column field="ativo" header="Situação">
       <ng-template pTemplate="body" let-p="rowData">
         <span pTooltip="{{p.ativo ? 'Desativar' : 'Ativar'}}" tooltipPosition="top">

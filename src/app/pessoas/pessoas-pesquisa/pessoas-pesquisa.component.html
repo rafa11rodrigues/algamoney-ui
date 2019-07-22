@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="ui-g">
+
+		<form (ngSubmit)="pesquisar()">
+			<div class="ui-g-12">
+				<h1>Pessoas</h1>
+			</div>
+	
+			<div class="ui-g-12">
+				<label style="display: block">Nome</label>
+				<input name="nome" [(ngModel)]="filtro.nome"
+					   pInputText type="text" />
+			</div>
+			<div class="ui-g-12">
+				<button pButton type="submit" label="Pesquisar"></button>
+			</div>
+		</form>
+	</div>
+
+	<div class="ui-g">
+		<app-pessoas-grid [pessoas]="pessoas"
+						  [linhas]="filtro.tamanho"
+						  [total]="total"
+						  (paginaTrocada)="trocarPagina($event)"></app-pessoas-grid>
+
+		<div class="ui-g-12">
+			<button pButton label="Nova Pessoa"></button>
+		</div>
+	</div>
+</div>

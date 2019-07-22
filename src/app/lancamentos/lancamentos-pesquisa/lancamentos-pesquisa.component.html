@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="ui-g">
+
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
+
+      <div class="ui-g-12">
+        <h1>Lançamentos</h1>
+      </div>
+
+      <div class="ui-g-12 ui-fluid">
+        <label>Descrição</label>
+        <input name="descricao" [(ngModel)]="filtro.descricao" pInputText type="text" />
+      </div>
+
+      <div class="ui-g-12">
+        <label style="display: block">Vencimento</label>
+        <p-calendar name="vencimentoDe" [(ngModel)]="filtro.vencimentoDe"
+                    dateFormat="dd/mm/yy" [showOnFocus]="false" [locale]="ptbr" [showIcon]="true"></p-calendar>
+
+        <label style="margin: 0 5px">até</label>
+        <p-calendar name="vencimentoAte" [(ngModel)]="filtro.vencimentoAte"
+                    dateFormat="dd/mm/yy" [showOnFocus]="false" [locale]="ptbr" [showIcon]="true"></p-calendar>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Pesquisar"></button>
+      </div>
+    </form>
+  </div>
+
+  <div class="ui-g">
+    <app-lancamentos-grid #grid
+                          [lancamentos]="lancamentos"
+                          [linhas]="filtro.tamanho"
+                          [total]="total"
+                          (paginaTrocada)="trocarPagina($event)"
+                          (aoExcluir)="excluir($event)"></app-lancamentos-grid>
+
+    <div class="ui-g-12">
+      <button pButton label="Novo lançamento"></button>
+    </div>
+  </div>
+</div>
