@@ -9,9 +9,17 @@
   
     <ul class="navbar__menu" [hidden]="!showMenu">
       <li class="navbar__usuario">Usuário logado</li>
-      <li class="navbar__menu-item"><a href="#">Lançamentos</a></li>
-      <li class="navbar__menu-item"><a href="#">Pessoas</a></li>
-      <li class="navbar__menu-item"><a href="#">Logout</a></li>
+      <a class="navbar__menu-item--link">
+        <li class="navbar__menu-item" aria-label="Lançamentos"
+            routerLink="/lancamentos" routerLinkActive="navbar__menu-ativo">Lançamentos</li>
+      </a>
+      <a class="navbar__menu-item--link">
+        <li class="navbar__menu-item" aria-label="Pessoas"
+            routerLinkActive="navbar__menu-ativo" routerLink="/pessoas">Pessoas</li>
+      </a>
+      <a class="navbar__menu-item--link" href="#">
+        <li class="navbar__menu-item">Logout</li>
+      </a>
     </ul>
   </nav>
 </div>

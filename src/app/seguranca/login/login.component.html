@@ -1,0 +1,41 @@
+<div class="container">
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-fluid">
+          <h1>Login</h1>
+        </div>
+
+        <div class="ui-g-3 ui-fluid">
+          <input #username="ngModel" name="username" [(ngModel)]="login.username" 
+                 pInputText type="email" placeholder="Email"
+                 required email />
+
+          <app-message [control]="username" error="required"
+                      text="Insira um email válido"></app-message>
+          <app-message [control]="username" error="email"
+                      text="Insira um email válido"></app-message>
+        </div>
+      </div>
+      <div class="ui-g">
+          <div class="ui-g-3 ui-fluid">
+            <input #senha="ngModel" name="senha" [(ngModel)]="login.senha" 
+                    pInputText type="password" placeholder="Senha"
+                    required minlength="5"/>
+  
+            <app-message [control]="senha" error="required"
+                          text="Insira uma senha"></app-message>
+            <app-message [control]="senha" error="minlength"
+                          text="A senha deve conter no mínimo {{senha.errors?.minlength?.requiredLength}} caracteres"></app-message>
+          </div>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-3 ui-fluid">
+          <button pButton type="submit" label="Entrar"
+                  [disabled]="loginForm.invalid"></button>
+        </div>
+      </div>
+    </form>
+
+</div>

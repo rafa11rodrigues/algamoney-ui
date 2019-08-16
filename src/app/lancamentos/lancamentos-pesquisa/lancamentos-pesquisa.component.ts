@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { LancamentoService } from './../lancamento.service';
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { ConfirmationService } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -35,7 +39,11 @@ export class LancamentosPesquisaComponent implements OnInit {
   total: number;
   @ViewChild('grid') grid: any;
   
-  constructor(private service: LancamentoService) {}
+  constructor(private service: LancamentoService,
+              private msgService: MessageService,
+              private cdService: ConfirmationService,
+              private errorHandler: ErrorHandlerService,
+              private title: Title) {}
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
@@ -46,8 +54,20 @@ export class LancamentosPesquisaComponent implements OnInit {
       this.total = response.totalElements;
     })
     .catch(erro => {
-      console.log(erro);
+      this.errorHandler.handle(erro);
     });
+  }
+
+  confirmarExclusao(lancamento: any) {
+    this.cdService.confirm({
+      header: "Excluir lançamento",
+      message: "Tem certeza de que deseja excluir o lançamento selecionado?",
+      accept: () => {
+        this.excluir(lancamento);
+      },
+      acceptLabel: "SIM",
+      rejectLabel: "NÃO"
+    })
   }
 
   excluir(lancamento: any) {
@@ -58,10 +78,16 @@ export class LancamentosPesquisaComponent implements OnInit {
         this.grid.grid.first = (this.filtro.pagina - 1) * this.filtro.tamanho;
       }
       else this.pesquisar(this.filtro.pagina);
+
+      this.msgService.add({
+        severity: "success",
+        detail: "Lançamento excluído com sucesso",
+        life: 10 * 1000 // 10s
+      });
     })
     .catch(erro => {
-      console.log(erro);
-    })
+      this.errorHandler.handle(erro);
+    });
   }
 
   trocarPagina(event: LazyLoadEvent) {
@@ -70,6 +96,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.title.setTitle("Lançamentos | Algamoney")
     this.pesquisar();
   }
 }

@@ -1,11 +1,11 @@
 <div class="container">
 
-  <form [formGroup]="cadastro" (ngSubmit)="onSubmit()">
+  <form [formGroup]="cadastro" (ngSubmit)="salvar()">
 
     <div class="ui-g">
   
       <div class="ui-g-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{editando ? "Editar" : "Nova"}} Pessoa</h1>
       </div>
   
       <div class="ui-g-12 ui-fluid">
@@ -30,8 +30,8 @@
             <h3>Endereço {{i+1}}</h3>
           </div>
           <div class="ui-g-6 ui-md-6">
-            <button pButton type="button" label="X"
-            (click)="removerEndereco(i)"></button>
+            <button *ngIf="enderecos.length > 1" pButton type="button" icon="pi pi-times"
+            (click)="removerEndereco(i)" aria-label="remover endereço"></button>
           </div>
     
           <div class="ui-g-12 ui-md-6 ui-fluid">
@@ -93,9 +93,12 @@
   
       <div class="ui-g-12">
         <button pButton type="submit" label="Salvar"
-                class="btn-form" [disabled]="cadastro.invalid"></button>
-        <button pButton type="button" [disabled]="true" type="button" label="Novo" class="btn-form ui-button-info"></button>
-        <a href="#">Voltar para a pesquisa</a>
+                class="btn-form" [disabled]="cadastro.invalid || salvando">
+          <span [hidden]="!salvando"><i class="pi pi-spinner pi-spin"></i></span>
+        </button>
+        <button pButton type="button" type="button" label="Nova" class="ui-button-info"
+        (click)="novo()"></button>
+        <a routerLink="/pessoas">Voltar para a pesquisa</a>
       </div>
   
     </div> <!-- ui-g -->

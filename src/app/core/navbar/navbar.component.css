@@ -2,6 +2,8 @@
 	padding: 10px 20px;
 	background-color: rgb(128, 128, 255);
 
+	position: relative;
+
 	width: 100%;
 }
 
@@ -11,10 +13,10 @@
 }
 
 .navbar__menu {
-	position: fixed;
+	position: absolute;
 	top: 50px;
 	right: 0;
-	z-index: 1000;;
+	z-index: 1000;
 
 	width: 200px;
 	height: 200px;
@@ -42,12 +44,18 @@
 	padding-left: 20px;
 }
 
-.navbar__menu-item a {
+.navbar__menu-item--link {
 	text-decoration: none;
 	color: #ccc;
 }
 
 .navbar__menu-item:hover {
 	background-color: #22f;
+	font-weight: bold;
+	cursor: default;
+}
+
+.navbar__menu-ativo {
+	background-color: #55f;
 	font-weight: bold;
 }

@@ -18,13 +18,15 @@
 	</div>
 
 	<div class="ui-g">
-		<app-pessoas-grid [pessoas]="pessoas"
+		<app-pessoas-grid #grid [pessoas]="pessoas"
 						  [linhas]="filtro.tamanho"
 						  [total]="total"
-						  (paginaTrocada)="trocarPagina($event)"></app-pessoas-grid>
+						  (paginaTrocada)="trocarPagina($event)"
+						  (aoExcluir)="confirmarExclusao($event)"
+						  (aoAlternarStatus)="alternarStatus($event)"></app-pessoas-grid>
 
 		<div class="ui-g-12">
-			<button pButton label="Nova Pessoa"></button>
+			<button pButton label="Nova Pessoa" routerLink="/pessoas/cadastro"></button>
 		</div>
 	</div>
 </div>

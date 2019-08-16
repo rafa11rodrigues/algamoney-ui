@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { URLSearchParams } from 'url';
 import * as moment from 'moment';
+import { Lancamento } from './lancamento';
+
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +35,35 @@ export class LancamentoService {
     .toPromise();
   }
 
+  buscar(id: number): Promise<any> {
+    const headers = new HttpHeaders().append('Authorization', this.auth);
+
+    return this.http.get(`${this.url}/${id}`, {headers})
+    .toPromise();
+  }
+
   excluir(id: number): Promise<any> {
     const headers = new HttpHeaders().append('Authorization', this.auth);
 
     return this.http.delete(`${this.url}/${id}`, {headers})
     .toPromise();
+  }
+
+  salvar(lancamento: Lancamento, novo = false): Promise<any> {
+    let headers = new HttpHeaders().append('Authorization', this.auth);
+    headers = headers.append('Content-Type', 'application/json');
+
+    if (novo) {
+      return this.http.post(this.url, lancamento, {headers})
+      .toPromise();
+    }
+    
+    return this.http.put(`${this.url}/${lancamento.id}`, lancamento, {headers})
+    .toPromise();
+  }
+
+  stringParaDate(data: string): Date {
+    return new Date(moment(data).format());
   }
 }
 

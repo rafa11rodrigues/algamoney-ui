@@ -34,10 +34,10 @@
                           [linhas]="filtro.tamanho"
                           [total]="total"
                           (paginaTrocada)="trocarPagina($event)"
-                          (aoExcluir)="excluir($event)"></app-lancamentos-grid>
+                          (aoExcluir)="confirmarExclusao($event)"></app-lancamentos-grid>
 
     <div class="ui-g-12">
-      <button pButton label="Novo lançamento"></button>
+      <button pButton label="Novo lançamento" routerLink="/lancamentos/cadastro"></button>
     </div>
   </div>
 </div>

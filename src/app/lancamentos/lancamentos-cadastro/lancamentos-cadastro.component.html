@@ -1,19 +1,20 @@
 <div class="container">
 
-  <form #cadastro="ngForm">
+  <form autocomplete="off" #cadastro="ngForm" (ngSubmit)="salvar(cadastro)">
 
     <div class="ui-g">
       <div class="ui-g-12">
-        <h1>Novo Lançamento</h1>
+        <h1>{{editando ? "Editar" : "Novo"}} Lançamento</h1>
       </div>
 
       <div class="ui-g-12">
-        <p-selectButton #tipo [options]="tiposLancamento"></p-selectButton>
+        <p-selectButton #tipo name="tipo" [(ngModel)]="lancamento.tipo"
+                        [options]="tiposLancamento"></p-selectButton>
       </div>
 
       <div class="ui-g-6 ui-fluid">
         <label>Vencimento</label>
-        <p-calendar #dataVencimento="ngModel" ngModel name="dataVencimento"
+        <p-calendar #dataVencimento="ngModel" [(ngModel)]="lancamento.dataVencimento" name="dataVencimento"
                     dateFormat="dd/mm/yy" [showOnFocus]="false" [locale]="ptbr" [showIcon]="true"
                     required></p-calendar>
 
@@ -23,13 +24,13 @@
         <label>
           {{tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}
         </label>
-        <p-calendar #dataPagamento="ngModel" ngModel name="dataPagamento"
+        <p-calendar #dataPagamento="ngModel" [(ngModel)]="lancamento.dataPagamento" name="dataPagamento"
                     dateFormat="dd/mm/yy" [showOnFocus]="false" [locale]="ptbr" [showIcon]="true"></p-calendar>
       </div>
       
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Descrição</label>
-        <input name="descricao" ngModel #descricao="ngModel" pInputText type="text"
+        <input name="descricao" [(ngModel)]="lancamento.descricao" #descricao="ngModel" pInputText type="text"
                required minlength="5">
 
         <app-message [control]="descricao" error="required" text="Este campo é obrigatório"></app-message>
@@ -37,7 +38,7 @@
       </div>
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label for="valor">Valor</label>
-        <input id="valor" #valor="ngModel" name="valor" ngModel pInputText type="text"
+        <input id="valor" #valor="ngModel" name="valor" [(ngModel)]="lancamento.valor" pInputText type="text"
                currencyMask [options]="moeda" placeholder="R$ 0,00"
                required>
 
@@ -46,14 +47,14 @@
   
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
-        <p-dropdown name="categoria" #categoria="ngModel" ngModel required
+        <p-dropdown name="categoria" #categoria="ngModel" [(ngModel)]="lancamento.categoria.id" required
                     [options]="categorias" placeholder="Selecione" [autoWidth]="false"></p-dropdown>
 
         <app-message [control]="categoria" error="required" text="Este campo é obrigatório"></app-message>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
-        <p-dropdown name="pessoa" #pessoa="ngModel" ngModel required
+        <p-dropdown name="pessoa" #pessoa="ngModel" [(ngModel)]="lancamento.pessoa.id" required
                     [options]="pessoas" placeholder="Selecione" [autoWidth]="false"></p-dropdown>
 
         <app-message [control]="pessoa" error="required" text="Este campo é obrigatório"></app-message>
@@ -61,14 +62,16 @@
   
       <div class="ui-g-12 ui-fluid">
         <label>Observação</label>
-        <textarea name="observacao" #observacao="ngModel" ngModel
+        <textarea name="observacao" #observacao="ngModel" [(ngModel)]="lancamento.observacao"
                   pInputTextarea rows="3"></textarea>
       </div>
   
       <div class="ui-g-12">
-        <button pButton type="submit" [disabled]="cadastro.invalid" label="Salvar" class="btn-form"></button>
-        <button pButton type="button" [disabled]="true" type="button" label="Novo" class="btn-form ui-button-info"></button>
-        <a href="#">Voltar para a pesquisa</a>
+        <button pButton type="submit" [disabled]="cadastro.invalid || salvando" label="Salvar" class="btn-form">
+          <span [hidden]="!salvando"><i class="pi pi-spinner pi-spin"></i></span>
+        </button>
+        <button pButton type="button" (click)="novo(cadastro)" label="Novo" class="ui-button-info"></button>
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
       </div>
 
     </div> <!-- ui-g -->

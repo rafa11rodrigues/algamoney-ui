@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MessageComponent } from './message/message.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -10,10 +11,12 @@ import { MessageComponent } from './message/message.component';
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   exports: [
-    MessageComponent
-  ]
+    MessageComponent,
+    RouterModule
+  ],
 })
 export class SharedModule { }

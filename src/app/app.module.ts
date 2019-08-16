@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +28,15 @@ import { PessoasGridComponent } from './pessoas/pessoas-grid/pessoas-grid.compon
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { CoreModule } from './core/core.module';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
+
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { SegurancaModule } from './seguranca/seguranca.module';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -37,12 +46,20 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+
+    ToastModule,
+    ConfirmDialogModule,
     
     LancamentosModule,
     PessoasModule,
+    SegurancaModule,
     CoreModule
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    {provide: LOCALE_ID, useValue: "pt-BR"}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

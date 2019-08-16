@@ -12,6 +12,7 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
 import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
 import { SharedModule } from '../shared/shared.module';
 import { PessoaService } from './pessoa.service';
+import { PessoasRoutingModule } from './pessoas-routing.module';
 
 @NgModule({
   declarations: [
@@ -31,12 +32,10 @@ import { PessoaService } from './pessoa.service';
     DataTableModule,
     TooltipModule,
 
-    SharedModule
+    SharedModule,
+    PessoasRoutingModule
   ],
-  exports: [
-    PessoasCadastroComponent,
-    PessoasPesquisaComponent
-  ],
+  exports: [],
   providers: [PessoaService]
 })
 export class PessoasModule { }

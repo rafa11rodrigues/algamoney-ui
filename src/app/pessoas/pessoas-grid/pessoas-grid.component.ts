@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 
 @Component({
@@ -12,9 +12,20 @@ export class PessoasGridComponent {
   @Input() linhas: number;
   @Input() total: number;
   @Output() paginaTrocada = new EventEmitter();
+  @Output() aoExcluir = new EventEmitter();
+  @Output() aoAlternarStatus = new EventEmitter();
+  @ViewChild('grid') grid: any;
 
   
-  dispararEvento(event: LazyLoadEvent) {
+  trocarPagina(event: LazyLoadEvent) {
     this.paginaTrocada.emit(event);
+  }
+
+  excluir(pessoa: any) {
+    this.aoExcluir.emit(pessoa);
+  }
+
+  alternarStatus(pessoa: any) {
+    this.aoAlternarStatus.emit(pessoa);
   }
 }
